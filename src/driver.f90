@@ -29,8 +29,14 @@ program driver
 
     opts = 0d0
     opts(1) = 1d0 ! default options
-    pslin = import("examples/pk.dat", 2)
-    psnl = time_evolution((/0d0, 2d0, log(1+zini) /), pslin(:,1), pslin(:,2), Omega(:,1,1), Omega(:,:,2:), opts)
+
+    pslin = import("pk.dat", 2)
+    psnl = time_evolution((/0d0, 2d0, log(1+zini) /), &
+                pslin(:,1), &
+                pslin(:,2), &
+                Omega(:,1,1), &
+                Omega(:,:,2:), &
+                opts)
     call export(psnl(:,:,2), "psout.dat")
 
     deallocate(Omega)

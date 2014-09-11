@@ -12,6 +12,8 @@ F90C = gfortran
 #
 F90FLAGS = -I. -J$(BUILD) -fPIC  -fmax-errors=1 \
 			-O3 -cpp -fopenmp -ffast-math -funroll-loops -march=native 
+CC = gcc
+CFLAGS = -lm -lgfortran -fopenmp -Wall 
 
 ifdef INTEL
 ## intel
@@ -45,7 +47,7 @@ MODULES = $(FIVMODULES) $(addsuffix .o, $(MODLIST))
 
 OFILES = $(addprefix $(BUILD),$(MODULES))
   
-all: $(BUILD)$(LIBTRG) $(BUILD)$(STATLIBTRG) mathlink driver
+all: $(BUILD)$(LIBTRG) $(BUILD)$(STATLIBTRG) mathlink driver driver_c
 
 mathlink:
 	+$(MAKE) -C $(MATHLINK) 
@@ -64,11 +66,11 @@ $(BUILD)$(LIBTRG): $(OFILES) Makefile
 
 .PHONY: clean mathlink
 clean:
-	rm -f $(BUILD_BASE)$(ISUFF)/* $(BUILD_BASE)/* driver driver_i driver_c
+	rm -f $(BUILD_BASE)$(ISUFF)/* $(BUILD_BASE)/* driver*
 	+$(MAKE) -C $(MATHLINK) clean
 
 driver: $(OFILES) $(SRC)driver.f90
 	$(F90C) $(F90FLAGS) $(SRC)driver.f90 -o $@$(ISUFF) $(BUILD)$(STATLIBTRG) 
 
 driver_c: $(OFILES) $(SRC)driver.c
-	$(CC) $(CFLAGS) $(SRC)driver.f90 -o $@$(ISUFF) $(BUILD)$(STATLIBTRG) 
+	$(CC) $(CFLAGS) $(SRC)driver.c -o $@$(ISUFF) $(BUILD)$(STATLIBTRG) 

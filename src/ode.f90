@@ -206,6 +206,7 @@ contains
     end subroutine rk_solver
     
 
+        ! 4th order Runge-Kutta, non-adaptive
     subroutine rk_nonad_solver(eta_ini, eta_fin_, Xini, f, ps_out, sizes)
         implicit none
         double precision, intent(in) :: eta_ini, eta_fin_(:)
@@ -343,6 +344,7 @@ contains
             ps_out(:sizes_(i),4,i) = ps_out(:sizes_(i),4,i) * exp(eta_(i+1))**2 / growth_factor(eta_(i+1))**2
             ! extra factor due to conversion to physical power spectrum 
         end do
+
         
         write(string,"(A,i5.3)") "Number of evaluations of A: ", counter
         call message("i", msg=string, subname="time_evolution")
@@ -384,7 +386,7 @@ contains
 
             !Flatten result
         do i=1,eta_len-1
-            ps_out(4*ps_len/2*(i-1)+1:4*ps_len/2*i) = [&
+            ps_out(2*ps_len*(i-1)+1:2*ps_len*i) = [&
                             ps_out_nonflat(:,1,i), &
                             ps_out_nonflat(:,2,i), &
                             ps_out_nonflat(:,3,i), &

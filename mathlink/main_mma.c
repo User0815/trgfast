@@ -32,12 +32,13 @@ void time_evo(double* eta, long eta_len,
               double* OmegaBulk, long OBulk_len, 
               double* opts, long opts_len
              ){
-    printf("Hi\n");
     double ps_out[2*ps_len*(eta_len-1)];
     double growth_out[1000];
+
     time_evolution_c(eta, (int*)&eta_len, ps_in, (int*)&ps_len,
             O_eta, (int*)&O_eta_len, O_k, (int*)&O_k_len,
-            OmegaBulk, (int*)&OBulk_len, (double*)ps_out, (double*)growth_out, opts);
+            OmegaBulk, (int*)&OBulk_len, (double*)ps_out, 
+            (double*)growth_out, opts);
         
     MLPutFunction(stdlink, "List", 2);
     MLPutReal64List(stdlink, (double*)ps_out, 2*ps_len*(eta_len-1));
