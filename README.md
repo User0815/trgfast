@@ -17,10 +17,11 @@ in the `mathlink` directory to set the paths according to your system.
 How to use the code
 ===================
 
-Type `make` to build the library. It can then be called from your Fortran or
-C/C++ code. You'll find examples on how to use it in the files `src/driver.f90`
-and `src/driver.c`. A demo notebook that shows how to use the MathLink is located
-at `mathlink/trgfast-demo.nb`.
+Type `make` to build the library with the `gcc` compilers, and `make
+INTEL=1` to build it with the Intel compilers. It can then be called from
+your Fortran or C/C++ code. You'll find examples on how to use it in the
+files `src/driver.f90` and `src/driver.c`. A demo notebook that shows how to
+use the MathLink is located at `mathlink/trgfast-demo.nb`.
 
 
 Troubleshooting
