@@ -4,13 +4,12 @@
 CC = gcc
 CFLAGS = -lgfortran -fopenmp -Wall 
 
-#  ifdef INTEL
+ifdef INTEL
 ## intel
-#  CC = icc 
-#  CFLAGS = -openmp -lifcore -O3 -Wall -fPIC #if you use ifort
-#  ISUFF = _i
-#  CFLAGS = -openmp -lgfortran #if you use gfortran
-#  endif
+CC = ifort 
+CFLAGS = -openmp
+ISUFF = _i
+endif
 
 ###############################
 

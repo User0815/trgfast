@@ -85,7 +85,7 @@ int main() {
     eta[1] = log(1+zini); // final eta
     eta[0] = 0;  // initial eta
 
-        // Read linear matter power spectrum at z=zini from file.
+        // Read linear matter power spectrum at z=0 from file.
     ps_in = malloc(2 * 2024 * sizeof(ps_in));
     ps_len = 2*import("pk.dat", ps_in, 2*2024);
 
