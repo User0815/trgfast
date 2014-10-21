@@ -6,8 +6,8 @@ CFLAGS = -lgfortran -fopenmp -Wall
 
 ifdef INTEL
 ## intel
-CC = ifort 
-CFLAGS = -openmp
+CC = icc 
+CFLAGS = -openmp -Wall -lifcore
 ISUFF = _i
 endif
 

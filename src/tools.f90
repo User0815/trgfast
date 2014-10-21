@@ -12,9 +12,6 @@
 module tools
 
     use options
-#ifdef __INTEL_COMPILER
-    use ifport, only : system
-#endif
 
     implicit none
 
@@ -42,8 +39,10 @@ contains
         character(19) dump_dir
         integer res
         write(dump_dir,'(A,i5.5,A)') "/tmp/trgfast-", oDUMP_DIR, "/"
-        res = system('mkdir -p '//dump_dir) ! create directory
-        ! TODO make this work for windows?
+#ifdef __GNUC__
+        call execute_command_line('mkdir -p '//dump_dir) ! create directory
+#endif
+        ! TODO make this work for windows and intel compilers
         return
     end function dump_dir
 

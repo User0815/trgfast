@@ -23,6 +23,8 @@ F90C = ifort
 # For production:
 F90FLAGS = -module $(BUILD) -fpp2 -O3 -CB -openmp -fPIC \
 			-assume realloc-lhs -funroll-loops -march=native 
+CC = icc
+CFLAGS = -lifcore -openmp -Wall 
 ISUFF = _i
 endif
 
@@ -66,7 +68,7 @@ $(BUILD)$(LIBTRG): $(OFILES) Makefile
 
 .PHONY: clean mathlink
 clean:
-	rm -f $(BUILD_BASE)$(ISUFF)/* $(BUILD_BASE)/* driver*
+	rm -f $(BUILD_BASE)_i/* $(BUILD_BASE)/* driver*
 	+$(MAKE) -C $(MATHLINK) clean
 
 driver: $(OFILES) $(SRC)driver.f90
