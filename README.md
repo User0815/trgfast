@@ -19,7 +19,8 @@ How to use the code
 
 Type `make` to build the library. It can then be called from your Fortran or
 C/C++ code. You'll find examples on how to use it in the files `src/driver.f90`
-and `src/driver.c`.
+and `src/driver.c`. A demo notebook that shows how to use the MathLink is located
+at `mathlink/trgfast-demo.nb`.
 
 
 Troubleshooting
@@ -27,7 +28,7 @@ Troubleshooting
 
 * The MathLink died? If there are no messages on the command line, try
   making sure that the trgfast library and the `trg_link` binary are compiled
-  on the same physical machine.
+  on the same physical machine as the one that is running Mathematica.
 
 Feedback
 ========
