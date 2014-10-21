@@ -41,6 +41,8 @@ contains
         write(dump_dir,'(A,i5.5,A)') "/tmp/trgfast-", oDUMP_DIR, "/"
 #ifdef __GNUC__
         call execute_command_line('mkdir -p '//dump_dir) ! create directory
+#else
+        call message("w", "Make sure the dump dir exists.", "dump_dir")
 #endif
         ! TODO make this work for windows and intel compilers
         return
