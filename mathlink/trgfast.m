@@ -96,7 +96,7 @@ OptionValue@trgoptions/.trgoptionssubs];
 If[!And@@NumericQ/@options,Message[trg::invopt,ToString[trgoptions[[First@Position[NumericQ/@options,False]]]];Return[$Failed];Abort[]]];
 
 link=Install[$location<>"trg_link"];
-If[link==$Failed,Return[$Failed];Abort[]];
+If[link==$Failed,Message[trg::linke ];Return[$Failed];Abort[]];
 result=Global`trgEvolution[
 {0.}~Join~eta,
 pslin,
@@ -106,7 +106,7 @@ Omegatab,
 options];
 
 Uninstall[link];
-If[result==$Failed||!NumericQ@First@Flatten@result,Return[$Failed];Abort[]];
+If[result==$Failed||!NumericQ@First@Flatten@result,Message[trg::linke ];Return[$Failed];Abort[]];
 
 (*format the output*)
 {psnl,growth}=result;
