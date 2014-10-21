@@ -1,0 +1,309 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     10023,        300]
+NotebookOptionsPosition[      9004,        265]
+NotebookOutlinePosition[      9341,        280]
+CellTagsIndexPosition[      9298,        277]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["trgfast", "Title",
+ CellChangeTimes->{{3.5921295020640373`*^9, 3.59212950349804*^9}, {
+  3.62286943623765*^9, 3.622869437110033*^9}}],
+
+Cell["\<\
+Adrian Vollmer, Institute for theoretical Physics, Universit\[ADoubleDot]t \
+Heidelberg, 2014\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.592129514978266*^9, 3.592129531834138*^9}, 
+   3.6022314482130423`*^9}],
+
+Cell[TextData[{
+ "This notebook demonstrates how to use trgfast via the ",
+ StyleBox["MathLink",
+  FontSlant->"Italic"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.592568155045557*^9, 3.592568169511779*^9}, 
+   3.602231340289118*^9, 3.621770960672831*^9, {3.622869445773827*^9, 
+   3.622869449894661*^9}}],
+
+Cell["First, load the Cosmomathica package", "Text",
+ CellChangeTimes->{{3.592130127195023*^9, 3.5921301320063553`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"<<", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<trgfast.m\>\""}], 
+   ")"}]}]], "Input",
+ CellChangeTimes->{{3.59213013536489*^9, 3.592130149810007*^9}, {
+  3.6194162814183702`*^9, 3.619416282780087*^9}, {3.622869540327035*^9, 
+  3.622869541367866*^9}}],
+
+Cell["\<\
+Load the initial power spectrum from a file\
+\>", "Text",
+ CellChangeTimes->{{3.6228695560345793`*^9, 3.622869565918437*^9}, {
+   3.622869622390151*^9, 3.6228696234029903`*^9}, 3.622869668477669*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"psini", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{
+     RowBox[{"Import", "[", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../pk.dat\>\""}], 
+      "]"}], ",", 
+     RowBox[{
+      RowBox[{"NumericQ", "@", 
+       RowBox[{"First", "@", "#"}]}], "&"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6228695694392843`*^9, 3.622869618891878*^9}}],
+
+Cell["Define the background functions", "Text",
+ CellChangeTimes->{{3.622869660942052*^9, 3.622869675754126*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"OmegaM", "=", ".3175"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"OmegaL", "=", 
+   RowBox[{"1", "-", "OmegaM"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Hubble", "[", 
+    RowBox[{"a_", ",", "H0_", ",", "OmegaM_", ",", "OmegaL_"}], "]"}], ":=", 
+   RowBox[{"H0", " ", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{
+      RowBox[{"OmegaM", "/", 
+       RowBox[{"a", "^", "3"}]}], "+", "OmegaL", "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "-", "OmegaM", "-", "OmegaL"}], ")"}], "/", 
+       RowBox[{"a", "^", "2"}]}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LCDMOmega21", "[", 
+    RowBox[{"a_", ",", "OmegaM_", ",", "OmegaL_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"-", "1.5"}], " ", "*", " ", 
+    RowBox[{
+     RowBox[{"OmegaM", "/", 
+      RowBox[{"a", "^", "3"}]}], "/", " ", 
+     RowBox[{
+      RowBox[{"Hubble", "[", 
+       RowBox[{"a", ",", "1", ",", "OmegaM", ",", "OmegaL"}], "]"}], "^", 
+      "2"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LCDMOmega22", "[", 
+    RowBox[{"a_", ",", "OmegaM_", ",", "OmegaL_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"3.", "+", 
+     RowBox[{"a", "*", 
+      RowBox[{"D", "[", 
+       RowBox[{
+        RowBox[{"Log", "@", 
+         RowBox[{"Hubble", "[", 
+          RowBox[{"aa", ",", "1", ",", "OmegaM", ",", "OmegaL"}], "]"}]}], 
+        ",", "aa"}], "]"}]}]}], "/.", 
+    RowBox[{"aa", "\[Rule]", "a"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.605265831044694*^9, 3.605265831435019*^9}, 
+   3.6054219154971857`*^9, 3.605422005427333*^9, {3.605422073973961*^9, 
+   3.605422096345582*^9}, 3.605422189144971*^9, {3.605422220622661*^9, 
+   3.6054222705499897`*^9}, {3.605422329066395*^9, 3.6054223305316477`*^9}, {
+   3.60586467560781*^9, 3.605864737433567*^9}, {3.605955263196007*^9, 
+   3.6059552680055637`*^9}, {3.607244501306197*^9, 3.607244501381452*^9}, {
+   3.6072449284522552`*^9, 3.607244933489306*^9}, {3.607245185704439*^9, 
+   3.607245198344859*^9}, 3.607245239556409*^9, {3.6072452814618998`*^9, 
+   3.607245361725268*^9}, {3.6073217216592007`*^9, 3.607321739820538*^9}, {
+   3.6077547911663837`*^9, 3.60775480176509*^9}, {3.6077549617880774`*^9, 
+   3.607754987364032*^9}, {3.622870345669737*^9, 3.622870348107209*^9}, {
+   3.622870463477124*^9, 3.622870465748721*^9}}],
+
+Cell["\<\
+Define initial redshift and the redshifts you want the nonlinear power \
+spectrum at\
+\>", "Text",
+ CellChangeTimes->{{3.622870431249608*^9, 3.622870447114024*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"aini", "=", 
+   RowBox[{"1", "/", "101."}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"zini", "=", "100"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"redshifts", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "35", ",", "10", ",", "3", ",", "2", ",", "1", ",", ".5", ",", "0"}], 
+    "}"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.622870423576159*^9, 3.622870450383806*^9}}],
+
+Cell["Call trgfast", "Text",
+ CellChangeTimes->{{3.62286962682237*^9, 3.6228696694688473`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"trgout", "=", 
+   RowBox[{"trgfast", "[", 
+    RowBox[{"psini", ",", "zini", ",", "redshifts", ",", 
+     RowBox[{
+      RowBox[{"LCDMOmega21", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Exp", "[", "#", "]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"zini", "+", "1"}], ")"}]}], ",", "OmegaM", ",", "OmegaL"}],
+        "]"}], "&"}], ",", 
+     RowBox[{
+      RowBox[{"LCDMOmega22", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Exp", "[", "#", "]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"zini", "+", "1"}], ")"}]}], ",", "OmegaM", ",", "OmegaL"}],
+        "]"}], "&"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.622869644577628*^9, 3.622869656712693*^9}, {
+   3.622870391256323*^9, 3.622870411658772*^9}, 3.6228704939409027`*^9, {
+   3.622870560057034*^9, 3.622870560745852*^9}}],
+
+Cell["\<\
+Output is the nonlinear power spectrum (matter-matter, matter-velocity, \
+velocity-velocity) at the requested redshifts and the growth function\
+\>", "Text",
+ CellChangeTimes->{{3.622870630135476*^9, 3.6228706618565273`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"psfin", ",", "growth"}], "}"}], "=", "trgout"}], ";"}]], "Input",\
+
+ CellChangeTimes->{{3.622870567281609*^9, 3.622870589996995*^9}}],
+
+Cell["Plot the matter - matter power spectrum for all redshifts", "Text",
+ CellChangeTimes->{{3.6228706639717407`*^9, 3.622870677095949*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ListLogLogPlot", "[", 
+  RowBox[{
+   RowBox[{"psfin", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "All", ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2"}], "}"}]}], "]"}], "]"}], ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", 
+      RowBox[{"P", "[", "k", "]"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.622870500414527*^9, 3.622870515988484*^9}, {
+  3.622870602807887*^9, 3.622870609942336*^9}, {3.622870806260016*^9, 
+  3.6228708207727127`*^9}}],
+
+Cell["\<\
+Plot the m-m, m-v, v-v components of the nonlinear power spectrum at the \
+smallest requested redshift\
+\>", "Text",
+ CellChangeTimes->{{3.622870716890204*^9, 3.6228707397863398`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ListLogLogPlot", "[", 
+  RowBox[{
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"psfin", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "All", ",", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", "i"}], "}"}]}], "]"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "2", ",", "4"}], "}"}]}], "]"}], ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"k", ",", 
+      RowBox[{
+       SubscriptBox["P", "ab"], "[", "k", "]"}]}], "}"}]}]}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.62287068887245*^9, 3.622870709756489*^9}, {
+  3.622870828017543*^9, 3.622870838860306*^9}}],
+
+Cell["Plot the growth function", "Text",
+ CellChangeTimes->{{3.622870751035862*^9, 3.622870787883507*^9}, 
+   3.622870849150158*^9}],
+
+Cell[BoxData[
+ RowBox[{"ListLogLogPlot", "[", 
+  RowBox[{"growth", ",", 
+   RowBox[{"Joined", "\[Rule]", "True"}], ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"z", ",", 
+      RowBox[{"G", "[", "z", "]"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.622870765896222*^9, 3.622870795352687*^9}, {
+  3.622870844515107*^9, 3.622870852069316*^9}}]
+}, Open  ]]
+},
+WindowSize->{740, 864},
+WindowMargins->{{Automatic, 328}, {50, Automatic}},
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (February 7, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 139, 2, 92, "Title"],
+Cell[721, 26, 218, 5, 30, "Subsubtitle"],
+Cell[942, 33, 301, 8, 31, "Text"],
+Cell[1246, 43, 120, 1, 30, "Text"],
+Cell[1369, 46, 319, 8, 32, "Input"],
+Cell[1691, 56, 209, 4, 31, "Text"],
+Cell[1903, 62, 416, 12, 55, "Input"],
+Cell[2322, 76, 113, 1, 30, "Text"],
+Cell[2438, 79, 2388, 57, 187, "Input"],
+Cell[4829, 138, 174, 4, 31, "Text"],
+Cell[5006, 144, 426, 12, 77, "Input"],
+Cell[5435, 158, 95, 1, 31, "Text"],
+Cell[5533, 161, 865, 23, 77, "Input"],
+Cell[6401, 186, 235, 4, 51, "Text"],
+Cell[6639, 192, 198, 6, 32, "Input"],
+Cell[6840, 200, 141, 1, 30, "Text"],
+Cell[6984, 203, 578, 15, 55, "Input"],
+Cell[7565, 220, 194, 4, 50, "Text"],
+Cell[7762, 226, 709, 21, 55, "Input"],
+Cell[8474, 249, 132, 2, 31, "Text"],
+Cell[8609, 253, 379, 9, 32, "Input"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
