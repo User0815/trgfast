@@ -89,7 +89,7 @@ int main(){
     trg_extract_spectrum(trg, 1, 1, &k, &ps);
         
         // Save it to a file
-    export("ps_nl.dat", k, ps, k_length);
+    export("c_ps_nl.dat", k, ps, k_length);
 
         // Clean up
     free(k);
