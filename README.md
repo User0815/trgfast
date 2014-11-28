@@ -23,6 +23,17 @@ your Fortran or C/C++ code. You'll find examples on how to use it in the
 files `src/driver.f90` and `src/driver.c`. A demo notebook that shows how to
 use the MathLink is located at `mathlink/trgfast-demo.nb`.
 
+To build your own program using the trgfast library, use this command to
+compile when using Fortran
+
+	gfortran -fopenmp my_program.f90 libtrgfast-0.1.a
+
+and this when using C
+
+    gcc -lgfortran -fopenmp my_program.c libtrgfast-0.1.a
+
+You may have to adjust the path to the file `libtrgfast-0.1.a` or copy it
+into the same directory.
 
 Troubleshooting
 ===============

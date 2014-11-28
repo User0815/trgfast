@@ -74,5 +74,7 @@ clean:
 driver: $(OFILES) $(SRC)driver.f90
 	$(F90C) $(F90FLAGS) $(SRC)driver.f90 -o $@$(ISUFF) $(BUILD)$(STATLIBTRG) 
 
-driver_c: $(OFILES) $(SRC)driver.c
-	$(CC) $(CFLAGS) $(SRC)driver.c -o $@$(ISUFF) $(BUILD)$(STATLIBTRG) 
+driver_c: $(OFILES)
+	#	$(CC) $(CFLAGS) $(SRC)driver.c -o $@$(ISUFF) $(BUILD)$(STATLIBTRG) 
+	+$(MAKE) -C c_wrapper
+	cp c_wrapper/driver_c .

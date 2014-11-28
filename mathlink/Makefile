@@ -29,15 +29,13 @@ clean:
 # Mathematica related stuff. Adjust paths accordingly.
 MLINKDIR = /opt/Wolfram/Mathematica/9.0.1/SystemFiles/Links/MathLink/DeveloperKit
 SYS = Linux-x86-64# Set this value with the result of evaluating $SystemID
-#SYS = Linux# Set this value with the result of evaluating $SystemID
 CADDSDIR = ${MLINKDIR}/${SYS}/CompilerAdditions
 
 INCDIR = ${CADDSDIR}
 LIBDIR = ${CADDSDIR}
 
 EXTRALIBS = -lm -lpthread -lrt -lstdc++ # Set these with appropriate libs for your system.
-MLLIB = ML64i3 # Set this to ML64i3 if using a 64-bit system
-#MLLIB = ML32i3 # Set this to ML64i3 if using a 64-bit system
+MLLIB = ML64i3  # Set this to ML32i3 if using a 64-bit system
 
 MPREP = ${CADDSDIR}/mprep
 ###############################

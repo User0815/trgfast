@@ -395,7 +395,6 @@ contains
 
         deallocate(ps_out_nonflat)
         deallocate(growth_nonflat)
-        return 
     end subroutine time_evolution_c
 
 
